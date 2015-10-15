@@ -102,6 +102,7 @@ This downloads a Boot2Docker image and then creates a Virtualbox virtual machine
 If you need more flexibility with the way your Docker development environment is set up you might want to consider using Vagrant instead of Boot2Docker. Vagrant provides many advatages, including support for multiple hypervisors, infinite virtual machine images, and much more.
 
 A container is a stripped-to-basics version of a Linux operating system. An image is software you load into a container.
+Docker containers only run as long as the command you specify is active.
 
 * Use Cases
 https://www.docker.com/products/use-cases
@@ -109,14 +110,31 @@ https://www.docker.com/products/use-cases
 * User guide
 https://docs.docker.com/userguide/
 
+* AWS Docker
+http://aws.amazon.com/docker/
+
+
 * Commands
+Run "Docker quickstart terminal"
+docker version
 docker images  >>> para ver qué imágenes están instaladas
-docker run imageName parameters
+docker run imageName commandToRunInsideContainer
 docker build -t docker-whale . >>> create an image called “docker-whale"
 docker search xxx >>> find images with text xxx
 docker pull imageName >>> downloads the image (pre-loads it).
 docker rmi imageNAme >>> remove the image from the host
+docker ps >>> queries the Docker daemon for information about all the containers it knows about.
+docker logs containerName
+docker stop containerName
+docker inspect containerName >>> It returns a JSON document containing useful configuration and status information for the specified container.
+
 Dockerfile best practices: https://docs.docker.com/articles/dockerfile_best-practices/
+
+docker run -t -i ubuntu:14.04 /bin/bash
+The -t flag assigns a pseudo-tty or terminal inside our new container and the -i flag allows us to make an interactive connection by grabbing the standard in (STDIN) of the container.
+
+docker run -d ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"
+The -d flag tells Docker to run the container and put it in the background, to daemonize it.
 
 
 * TO BE SEEN/READ
