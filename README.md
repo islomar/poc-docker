@@ -109,6 +109,7 @@ https://www.docker.com/products/use-cases
 * User guide
 https://docs.docker.com/userguide/
 
+* Commands
 docker images  >>> para ver qué imágenes están instaladas
 docker run imageName parameters
 docker build -t docker-whale . >>> create an image called “docker-whale"
@@ -116,3 +117,9 @@ docker search xxx >>> find images with text xxx
 docker pull imageName >>> downloads the image (pre-loads it).
 docker rmi imageNAme >>> remove the image from the host
 Dockerfile best practices: https://docs.docker.com/articles/dockerfile_best-practices/
+
+
+* TO BE SEEN/READ
+https://openwebinars.net/docker-contenedores-de-aplicaciones-el-futuro-de-la-distribucion-de-aplicaciones/
+https://www.docker.com/products/use-cases
+https://docs.docker.com/userguide/
