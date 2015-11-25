@@ -1,7 +1,45 @@
+# Docker playground
+
+## Resources
+* Getting Started with Docker by John Willis: [https://www.youtube.com/watch?v=zOyQx9vM9Ac](https://www.youtube.com/watch?v=zOyQx9vM9Ac)
+* The Docker Book
+* Training: [https://training.docker.com/self-paced-training](https://training.docker.com/self-paced-training)
+* Docs: [https://docs.docker.com/](https://docs.docker.com/)
+* Getting Started for Linux: [https://docs.docker.com/linux/started/(https://docs.docker.com/linux/started/)
+
+
+
+## Notes
+
+### Introduction
+**Virtual Machines**
+* Each virtual machine includes the application, the necessary binaries and libraries and an entire guest operating system - all of which may be tens of GBs in size.
+
+**Containers**
+* Containers include the application and all of its dependencies, but share the kernel with other containers. They run as an isolated process in userspace on the host operating system. They’re also not tied to any specific infrastructure – Docker containers run on any computer, on any infrastructure and in any cloud. 
+
+On a typical Linux installation, the Docker client, the Docker daemon, and any containers run directly on your localhost. This means you can address ports on a Docker container using standard localhost addressing such as `localhost:8000` 
+
+In an OS X installation, the docker daemon is running inside a Linux VM called default. The default is a lightweight Linux VM made specifically to run the Docker daemon on Mac OS X. The VM runs completely from RAM, is a small ~24MB download, and boots in approximately 5s.
+
+After a basic `docker run hello-world`:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+Depending on how it was built, an image might run a simple, single command and then exit. This is what Hello-World did.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ `$ docker run -it ubuntu bash`
+
+###General information
 Its architectural philosophy centers around atomic or throw-away containers. During deployment, the whole running environment of the old application is thrown away with it.
 Nothing in the environment of the application will live longer than the application itself and that’s a simple idea with big repercussions.
 
-And it means that applications are highly portable between servers because all state has to be included directly into the deployment artifact and be immutable, or sent to an external dependency like a database, cache, or file server.
+And it means that applications are highly portable between servers because **all state has to be included directly into the deployment artifact and be IMMUTABLE**, or sent to an external dependency like a database, cache, or file server.
 
 Docker bundles application software and required OS filesystems together in a single standardized image format.
 
@@ -9,7 +47,7 @@ Using packaged artifacts to test and deliver the exact same artifact to all syst
 
 ##Abstracting software applications from the hardware without sacrificing resources.
 Traditional enterprise virtualization solutions like VMware were typically used when people have needed to create an abstraction layer between the physical hardware and the software applications that run on it, at the cost of resources.
-The hypervisors that manage the VMs and each VM running kernel use a percentage of the hardware system’s resources, which are then no longer available to the hosted applications. A container, on the other hand, is just another process that talks directly to the Linux kernel and therefore can utilize more resources, up until the system or quota-based limits are reached.
+The hypervisors that manage the VMs and each VM running kernel use a percentage of the hardware system’s resources, which are then no longer available to the hosted applications. **A container, on the other hand, is just another process** that talks directly to the Linux kernel and therefore can utilize more resources, up until the system or quota-based limits are reached.
 
 Some organizations will find that they can completely remove their configuration management tool when they migrate to Docker, but the real power of Docker is that although it can replace some aspects of more traditional tools, it is usually completely compatible with them as well.
 
@@ -31,7 +69,7 @@ Push-to-deploy systems like Heroku have shown developers what the world can look
 
 As a company, Docker preaches an approach of “batteries included but removable.” Which means that they want their tools to come with everything most people need to get the job done, while still being built from interchangeable parts that can easily be swapped in and out to support custom solutions.
 
-The Docker client runs directly on most major operating systems, but because the Docker server uses Linux containers, it does not run on non-Linux systems. Docker has traditionally been developed on the Ubuntu Linux distribution, but today most Linux distributions and other major operating systems are now supported where possible.
+The **Docker client** runs directly on most major operating systems, but because the Docker server uses Linux containers, it does not run on non-Linux systems. Docker has traditionally been developed on the Ubuntu Linux distribution, but today most Linux distributions and other major operating systems are now supported where possible.
 
 Docker is a simple client/server model, with only one executable that acts as both components, depending on how you invoke the docker command. Underneath those simple exteriors, Docker heavily leverages kernel mechanisms such as iptables, virtual bridging, cgroups, namespaces, and various filesystem drivers.
 Optionally there is a third component called the registry, which stores Docker images and metadata about those images.
@@ -46,7 +84,7 @@ The Docker daemon has a remote API. This is in fact what the Docker command-line
 
 Docker registered their own TCP port with IANA and it’s now generally configured to use TCP port 2375 when running unencrypted, or 2376 when handling encrypted traffic. In Docker 1.3 and later, the default is to use the encrypted port on 2376.
 
-##Container networking
+###Container networking
 The Docker server acts as a virtual bridge and the containers are clients behind it. A bridge is just a network device that repeats traffic from one side to another. So you can think of it like a mini virtual network with hosts attached. The implementation is that each container has its own virtual ethernet interface connected to the Docker bridge and its own IP address allocated to the virtual interface.
 Docker lets you bind ports on the host to the container so that the outside world can reach your container. That traffic passes over a proxy that is also part of the Docker.
 
@@ -56,10 +94,10 @@ A good way to start shaping your understanding of how to leverage Docker is to t
 
 A quick test on Docker 1.4.1 reveals that a newly created container from an existing image takes a whopping 12 kilobytes of disk space. That’s pretty lightweight. One the other hand, a new virtual machine created from a golden image might require hundreds or thousands of megabytes. The reason that the new container is so small is because it is just a reference to a layered filesystem image and some metadata about the configuration.
 
-##Limited isolation
+###Limited isolation
 Containers are isolated from each other, but it’s probably more limited than you might expect. While you can put limits on their resources, the default container configuration just has them all sharing CPU and memory on the host system, much as you would expect from colocated Unix processes. That means that unless you constrain them, containers can compete for resources on your production machines. That is sometimes what you want, but it impacts your design decisions. Limits on CPU and memory use are possible through Docker but, in most cases, they are not the default like they would be from a virtual machine.
 
-##Stateless applications
+###Stateless applications
 A good example of the kind of application that containerizes well is a web application that keeps its state in a database. If you think about your web application, though, it probably has local state that you rely on, like configuration files. That might not seem like a lot of state, but it means that you’ve limited the reusability of your container, and maintaining configuration data in your codebase.
 In many cases, the process of containerizing your application means that you move configuration state into environment variables that can be passed to your application from the container. This allows you to easily do things like use the same container to run in either production or staging environments.
 
@@ -68,12 +106,12 @@ To simplify this a bit, remember that a Docker image contains everything require
 
 “What was the previous version?”: Docker has a built-in mechanism for handling this: it provides image tagging at deployment time.
 
-##Building
+###Building
 The Docker command-line tool contains a build flag that will consume a Dockerfile and produce a Docker image. Each command in a Dockerfile generates a new layer in the image, so it’s easy to reason about what the build is going to do by looking at the Dockerfile itself.
 
 The standard Docker client only handles deploying to a single host at a time, but there are other tools avaliable that make it easy to deploy into a cluster of Docker hosts
 
-##The Docker ecosystem
+###The Docker ecosystem
 The first important category of tools that adds functionality to the core Docker distribution contains orchestration and mass deployment tools like Docker’s Swarm, New Relic’s Centurion and Spotify’s Helios. All of these take a generally simple approach to orchestration. For more complex environments, Google’s Kubernetes and Apache Mesos are more powerful options. There are new tools shipping constantly as new
 adopters discover gaps and publish improvements.
 Additional categories include auditing, logging, mapping, and many other tools, the majority of which leverage the Docker API directly. Recent announcements include direct support for Docker logs in Mozilla’s Heka log router, for example.
@@ -115,25 +153,27 @@ http://aws.amazon.com/docker/
 
 
 * Commands
-Run "Docker quickstart terminal"
-docker version
-docker images  >>> para ver qué imágenes están instaladas
-docker run imageName commandToRunInsideContainer
-docker build -t docker-whale . >>> create an image called “docker-whale"
-docker search xxx >>> find images with text xxx
-docker pull imageName >>> downloads the image (pre-loads it).
-docker rmi imageNAme >>> remove the image from the host
-docker ps >>> queries the Docker daemon for information about all the containers it knows about.
-docker logs containerName
-docker stop containerName
-docker inspect containerName >>> It returns a JSON document containing useful configuration and status information for the specified container.
+ * Run "Docker quickstart terminal"
+ * docker version
+ * docker images  >>> para ver qué imágenes están instaladas
+ * docker run hello-world >>> create and run a Docker container, loading the image 'hello-world' into the container
+ * docker run imageName commandToRunInsideContainer
+ * docker build -t docker-whale . >>> create an image called “docker-whale" from the Dockerfile
+ * docker search xxx >>> find images with text xxx
+ * docker pull imageName >>> downloads the image (pre-loads it).
+ * docker rmi imageNAme >>> remove the image from the host
+ * docker ps >>> queries the Docker daemon for information about all the containers it knows about.
+ * docker logs containerName
+ * docker stop containerName
+ * docker inspect containerName >>> It returns a JSON document containing useful configuration and status information for the specified container.
+ * docker tag <imageId> <accountNameInDockerHub/imageName:versionLabelOrTag> 
 
 Dockerfile best practices: https://docs.docker.com/articles/dockerfile_best-practices/
 
-docker run -t -i ubuntu:14.04 /bin/bash
+**docker run -t -i ubuntu:14.04 /bin/bash**
 The -t flag assigns a pseudo-tty or terminal inside our new container and the -i flag allows us to make an interactive connection by grabbing the standard in (STDIN) of the container.
 
-docker run -d ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"
+**docker run -d ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"**
 The -d flag tells Docker to run the container and put it in the background, to daemonize it.
 
 
@@ -141,3 +181,6 @@ The -d flag tells Docker to run the container and put it in the background, to d
 https://openwebinars.net/docker-contenedores-de-aplicaciones-el-futuro-de-la-distribucion-de-aplicaciones/
 https://www.docker.com/products/use-cases
 https://docs.docker.com/userguide/
+
+###Questions
+* Can you isolate resource comsumption?
