@@ -5,7 +5,7 @@
 * The Docker Book
 * Training: [https://training.docker.com/self-paced-training](https://training.docker.com/self-paced-training)
 * Docs: [https://docs.docker.com/](https://docs.docker.com/)
-* Getting Started for Linux: [https://docs.docker.com/linux/started/(https://docs.docker.com/linux/started/)
+* Getting Started for Linux: [https://docs.docker.com/linux/started/](https://docs.docker.com/linux/started/)
 
 
 
@@ -158,7 +158,6 @@ http://aws.amazon.com/docker/
  * docker images  >>> para ver qué imágenes están instaladas
  * docker run hello-world >>> create and run a Docker container, loading the image 'hello-world' into the container
  * docker run imageName commandToRunInsideContainer
- * docker build -t docker-whale . >>> create an image called “docker-whale" from the Dockerfile
  * docker search xxx >>> find images with text xxx
  * docker pull imageName >>> downloads the image (pre-loads it).
  * docker rmi imageNAme >>> remove the image from the host
@@ -166,7 +165,14 @@ http://aws.amazon.com/docker/
  * docker logs containerName
  * docker stop containerName
  * docker inspect containerName >>> It returns a JSON document containing useful configuration and status information for the specified container.
- * docker tag <imageId> <accountNameInDockerHub/imageName:versionLabelOrTag> 
+ * docker search <nameToSearch>
+
+ **Build and upload an image**
+ * docker build -t docker-whale . >>> create an image called “docker-whale" from the Dockerfile
+ * docker tag <imageId> <accountNameInDockerHub/imageName:versionLabelOrTag> >>> Create tag to b e pushed to DockerHub
+  * docker login --username=xxx --email=xxx
+  * docker push islomar/xxxxx
+  * Automate builds on Docker Hub: [https://docs.docker.com/docker-hub/builds/](https://docs.docker.com/docker-hub/builds/)
 
 Dockerfile best practices: https://docs.docker.com/articles/dockerfile_best-practices/
 
