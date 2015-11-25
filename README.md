@@ -6,7 +6,10 @@
 * Training: [https://training.docker.com/self-paced-training](https://training.docker.com/self-paced-training)
 * Docs: [https://docs.docker.com/](https://docs.docker.com/)
 * Getting Started for Linux: [https://docs.docker.com/linux/started/](https://docs.docker.com/linux/started/)
-
+* Docker compose: 
+ * [http://www.docker.com/docker-compose](http://www.docker.com/docker-compose)
+ * [http://docs.docker.com/compose/](http://docs.docker.com/compose/)
+* Tutorials: [https://blog.docker.com/2015/03/docker-tutorial-1-installing-docker/](https://blog.docker.com/2015/03/docker-tutorial-1-installing-docker/)
 
 
 ## Notes
@@ -162,6 +165,7 @@ http://aws.amazon.com/docker/
  * docker pull imageName >>> downloads the image (pre-loads it).
  * docker rmi imageNAme >>> remove the image from the host
  * docker ps >>> queries the Docker daemon for information about all the containers it knows about.
+ * docker ps -a >>> list  all containers, stopped and running.
  * docker logs containerName
  * docker stop containerName
  * docker inspect containerName >>> It returns a JSON document containing useful configuration and status information for the specified container.
@@ -177,7 +181,11 @@ http://aws.amazon.com/docker/
 Dockerfile best practices: https://docs.docker.com/articles/dockerfile_best-practices/
 
 **docker run -t -i ubuntu:14.04 /bin/bash**
-The -t flag assigns a pseudo-tty or terminal inside our new container and the -i flag allows us to make an interactive connection by grabbing the standard in (STDIN) of the container.
+* Run an interactive shell.
+* The -t flag assigns a pseudo-tty or terminal inside our new container and the -i flag allows us to make an interactive connection by grabbing the standard in (STDIN) of the container.
+* To detach the tty without exiting the shell, use the escape sequence Ctrl-p + Ctrl-q. The container will continue to exist in a stopped state once exited. To list all containers, stopped and running, use the docker ps -a command.
+* With -t you're actually inside the container.
+* You can use `-ti`
 
 **docker run -d ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"**
 The -d flag tells Docker to run the container and put it in the background, to daemonize it.
