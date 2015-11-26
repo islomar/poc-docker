@@ -261,6 +261,11 @@ The -P flag is new and tells Docker to map any required network ports inside our
 
 
 
+## Docker orchestration
+[https://railsadventures.wordpress.com/2015/11/15/docker-orchestration-the-full-story/](https://railsadventures.wordpress.com/2015/11/15/docker-orchestration-the-full-story/)
+
+
+
 ## SCRATCH
 * [https://docs.docker.com/v1.8/articles/baseimages/](https://docs.docker.com/v1.8/articles/baseimages/)
 * You can use Docker’s reserved, minimal image, scratch, as a starting point for building containers. Using the scratch “image” signals to the build process that you want the next command in the Dockerfile to be the first filesystem layer in your image.
