@@ -1,11 +1,18 @@
 # Docker playground
 
+## Glossary
+[https://docs.docker.com/v1.8/reference/glossary/](https://docs.docker.com/v1.8/reference/glossary/)
+
 ## Resources
 * Getting Started with Docker by John Willis: [https://www.youtube.com/watch?v=zOyQx9vM9Ac](https://www.youtube.com/watch?v=zOyQx9vM9Ac)
 * The Docker Book
 * Training: [https://training.docker.com/self-paced-training](https://training.docker.com/self-paced-training)
 * Docs: [https://docs.docker.com/](https://docs.docker.com/)
-* Getting Started for Linux: [https://docs.docker.com/linux/started/](https://docs.docker.com/linux/started/)
+* Getting Started: 
+ * [https://docs.docker.com/linux/started/](https://docs.docker.com/linux/started/)
+ * [https://docs.docker.com/engine/userguide/dockerizing/](https://docs.docker.com/engine/userguide/dockerizing/)
+  * [https://docs.docker.com/engine/userguide/usingdocker/](https://docs.docker.com/engine/userguide/usingdocker/)
+* Networking: [https://docs.docker.com/engine/userguide/networkingcontainers/](https://docs.docker.com/engine/userguide/networkingcontainers/)
 * Docker compose: 
  * [http://www.docker.com/docker-compose](http://www.docker.com/docker-compose)
  * [http://docs.docker.com/compose/](http://docs.docker.com/compose/)
@@ -176,32 +183,95 @@ http://aws.amazon.com/docker/
  * docker logs containerName
  * docker stop containerName
  * docker inspect containerName >>> It returns a JSON document containing useful configuration and status information for the specified container.
- * docker search <nameToSearch>
+ * docker search <nameToSearch> >> it searchs not in local but in DockerHub
+ * docker attach <ContainerId> >> to attach to a detached running container
+ * **docker exec [OPTIONS] CONTAINER COMMAND [ARG...]**: Run a command in a running container.
+ * docker pause <containerName>
 
  **Build and upload an image**
- * docker build -t docker-whale . >>> create an image called “docker-whale" from the Dockerfile
+ * `docker build -t docker-whale .` >>> create an image called “docker-whale" from the Dockerfile; `-t`is the tag for the image.
+  * The Docker daemon will run your steps one-by-one, committing the result to a new image if necessary, before finally outputting the ID of your new image. The Docker daemon will automatically clean up the context you sent.
+  * Note that each instruction is run independently, and causes a new image to be created - so RUN cd /tmp will not have any effect on the next instructions.
+  * Whenever possible, Docker will re-use the intermediate images, accelerating docker build significantly (indicated by Using cache
+
  * docker tag <imageId> <accountNameInDockerHub/imageName:versionLabelOrTag> >>> Create tag to b e pushed to DockerHub
   * docker login --username=xxx --email=xxx
   * docker push islomar/xxxxx
   * Automate builds on Docker Hub: [https://docs.docker.com/docker-hub/builds/](https://docs.docker.com/docker-hub/builds/)
 
-Dockerfile best practices: https://docs.docker.com/articles/dockerfile_best-practices/
+* docker exec -it test ps aux
+ * Show all the process in the test container.
 
-**docker run -t -i ubuntu:14.04 /bin/bash**
-* Run an interactive shell.
-* The -t flag assigns a pseudo-tty or terminal inside our new container and the -i flag allows us to make an interactive connection by grabbing the standard in (STDIN) of the container.
-* To detach the tty without exiting the shell, use the escape sequence Ctrl-p + Ctrl-q. The container will continue to exist in a stopped state once exited. To list all containers, stopped and running, use the docker ps -a command.
-* With -t you're actually inside the container.
-* You can use `-ti`
+**Dockerfile**:
+* Best practices [https://docs.docker.com/articles/dockerfile_best-practices/](https://docs.docker.com/articles/dockerfile_best-practices/)
+* [https://docs.docker.com/v1.8/reference/builder/](https://docs.docker.com/v1.8/reference/builder/)
+* .dockerignore:
+ * If a file named .dockerignore exists in the root of PATH, then Docker interprets it as a newline-separated list of exclusion patterns. Docker excludes files or directories relative to PATH that match these exclusion patterns.
+* **FROM**: The FROM instruction sets the Base Image for subsequent instructions. FROM can appear multiple times within a single Dockerfile in order to create multiple images.
+* **RUN**: 
+  * You have both a shell and an exec form.
+  * The RUN instruction will execute any commands in a new layer on top of the current image and commit the results. Layering RUN instructions and generating commits conforms to the core concepts of Docker where commits are cheap and containers can be created from any point in an image’s history, much like source control. The command is run in a shell - /bin/sh -c
+  * The cache for an instruction like RUN apt-get dist-upgrade -y will be reused during the next build.
+ * **CMD**: 
+  * There can only be one CMD instruction in a Dockerfile. The main purpose of a CMD is to provide defaults for an executing container. These defaults can include an executable, or they can omit the executable, in which case you must specify an ENTRYPOINT instruction as well.
+  * If the user specifies arguments to docker run then they will override the default specified in CMD.
+ * **LABEL**: The LABEL instruction adds metadata to an image. A LABEL is a key-value pair. Docker recommends combining labels in a single LABEL instruction where possible. 
+ * **EXPOSE**: The EXPOSE instructions informs Docker that the container will listen on the specified network ports at runtime. Docker uses this information to interconnect containers using links (see the Docker User Guide) and to determine which ports to expose to the host when using the -P flag.
+ * **ADD <src> <dest>**:  The ADD instruction copies new files, directories or remote file URLs from <src> and adds them to the filesystem of the container at the path <dest>.
+ * **COPY**: The COPY instruction copies new files or directories from <src> and adds them to the filesystem of the container at the path <dest>.
+ * ADD vs COPY (use COPY!!): [https://labs.ctl.io/dockerfile-add-vs-copy/](https://labs.ctl.io/dockerfile-add-vs-copy/). The only reason to use ADD is when you have an archive file that you definitely want to have auto-extracted into the image
+ * **ENTRYPOINT**: 
+  * An ENTRYPOINT allows you to configure a container that will run as an executable.
+  * Only the last ENTRYPOINT instruction in the Dockerfile will have an effect.
+ * **VOLUME**: The VOLUME instruction creates a mount point with the specified name and marks it as holding externally mounted volumes from native host or other containers.
+ * **USER**: The USER instruction sets the user name or UID to use when running the image and for any RUN, CMD and ENTRYPOINT instructions that follow it in the Dockerfile.
+  * **WORKDIR**: The WORKDIR instruction sets the working directory for any RUN, CMD, ENTRYPOINT, COPY and ADD instructions that follow it in the Dockerfile. It can be used multiple times in the one Dockerfile. If a relative path is provided, it will be relative to the path of the previous WORKDIR instruction.
+   * **ONBUILD [INSTRUCTION]**: The ONBUILD instruction adds to the image a trigger instruction to be executed at a later time, when the image is used as the base for another build. The trigger will be executed in the context of the downstream build, as if it had been inserted immediately after the FROM instruction in the downstream Dockerfile.. This is useful if you are building an image which will be used as a base to build other images, for example an application build environment or a daemon which may be customized with user-specific configuration.
+
+* **ENTRYPOINT and CMD example:**
+The best use for ENTRYPOINT is to set the image’s main command, allowing that image to be run as though it was that command (and then use CMD as the default flags).
+
+Let’s start with an example of an image for the command line tool s3cmd:
+
+`ENTRYPOINT ["s3cmd"]
+CMD ["--help"]`
+
+Now the image can be run like this to show the command’s help:
+
+`$ docker run s3cmd`
+
+Or using the right parameters to execute a command:
+
+`$ docker run s3cmd ls s3://mybucket`
+
+
+
+* **docker run -t -i ubuntu:14.04 /bin/bash**
+ * Run an interactive shell.
+ * The `-t` flag assigns a pseudo-tty or terminal inside our new container and the `-i` flag allows us to make an interactive connection by grabbing the standard in (STDIN) of the container.
+ * To detach the tty without exiting the shell, use the escape sequence Ctrl-p + Ctrl-q. The container will continue to exist in a stopped state once exited. To list all containers, stopped and running, use the docker ps -a command.
+ * With -t you're actually inside the container.
+ * You can use `-ti`
 
 **docker run -d ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"**
-The -d flag tells Docker to run the container and put it in the background, to daemonize it.
+The -d flag tells Docker to run the container and put it in the background, to daemonize it (detached mode).
+
+**docker run -d -P training/webapp python app.py**
+The -P flag is new and tells Docker to map any required network ports inside our container to our host. This lets us view our web application.
 
 
-* TO BE SEEN/READ
+
+## SCRATCH
+* [https://docs.docker.com/v1.8/articles/baseimages/](https://docs.docker.com/v1.8/articles/baseimages/)
+* You can use Docker’s reserved, minimal image, scratch, as a starting point for building containers. Using the scratch “image” signals to the build process that you want the next command in the Dockerfile to be the first filesystem layer in your image.
+* While scratch appears in Docker’s repository on the hub, you can’t pull it, run it, or tag any image with the name scratch. Instead, you can refer to it in your Dockerfile.
+
+
+
+## TO BE SEEN/READ
 https://openwebinars.net/docker-contenedores-de-aplicaciones-el-futuro-de-la-distribucion-de-aplicaciones/
 https://www.docker.com/products/use-cases
 https://docs.docker.com/userguide/
 
-###Questions
+##Questions
 * Can you isolate resource comsumption?
