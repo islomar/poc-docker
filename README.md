@@ -134,20 +134,20 @@ adopters discover gaps and publish improvements.
 Additional categories include auditing, logging, mapping, and many other tools, the majority of which leverage the Docker API directly. Recent announcements include direct support for Docker logs in Mozilla’s Heka log router, for example.
 
 * Atomic hosts
-** An atomic host is a small, finely tuned operating system image that supports container hosting and atomic OS upgrades.
+ * An atomic host is a small, finely tuned operating system image that supports container hosting and atomic OS upgrades.
 Instead of relying on configuration management to try and keep all of your OS components in sync, what if you could simply pull down a  new, thin OS image and reboot the server? And then if something breaks, easily roll back to the exact image you were previously using?
 
 * Docker client
-** The docker command used to control most of the Docker workflow and talk to remote Docker servers.
+ * The docker command used to control most of the Docker workflow and talk to remote Docker servers.
 
 * Docker server
-** The docker command run in daemon mode. This basically turns a Linux system into a Docker server that can have containers deployed, launched, and torn down via a remote client.
+ * The docker command run in daemon mode. This basically turns a Linux system into a Docker server that can have containers deployed, launched, and torn down via a remote client.
 
 * Docker images
-** Docker images consist of one or more filesystem layers and some important metadata that represent all the files required to run a Dockerized application. A single Docker image can be copied to numerous hosts. A container will typically have both a name and a tag. The tag is generally used to identify a particular release of an image.
+ * Docker images consist of one or more filesystem layers and some important metadata that represent all the files required to run a Dockerized application. A single Docker image can be copied to numerous hosts. A container will typically have both a name and a tag. The tag is generally used to identify a particular release of an image.
 
 * Docker container
-** A Docker container is a Linux container that has been instantiated from a Docker Image. A specific container can only exist once; however, you can easily create multiple containers from the same image.
+ * A Docker container is a Linux container that has been instantiated from a Docker Image. A specific container can only exist once; however, you can easily create multiple containers from the same image.
 
 If you are using Microsoft Windows or Mac OS X in your Docker workflow, the default installation provides Virtualbox and Boot2Docker, so that you can set up a Docker server for testing. These tools allow you to boot an Ubuntu-based Linux virtual machine on your local system.
 
@@ -160,33 +160,33 @@ A container is a stripped-to-basics version of a Linux operating system. An imag
 Docker containers only run as long as the command you specify is active.
 
 * Use Cases
-https://www.docker.com/products/use-cases
+[https://www.docker.com/products/use-cases](https://www.docker.com/products/use-cases)
 
 * User guide
-https://docs.docker.com/userguide/
+[https://docs.docker.com/userguide/](https://docs.docker.com/userguide/)
 
 * AWS Docker
-http://aws.amazon.com/docker/
+[http://aws.amazon.com/docker/](http://aws.amazon.com/docker/)
 
 
 * Commands
  * Run "Docker quickstart terminal"
- * docker version
- * docker images  >>> para ver qué imágenes están instaladas
- * docker run hello-world >>> create and run a Docker container, loading the image 'hello-world' into the container
- * docker run imageName commandToRunInsideContainer
- * docker search xxx >>> find images with text xxx
- * docker pull imageName >>> downloads the image (pre-loads it).
- * docker rmi imageNAme >>> remove the image from the host
- * docker ps >>> queries the Docker daemon for information about all the containers it knows about.
- * docker ps -a >>> list  all containers, stopped and running.
- * docker logs containerName
- * docker stop containerName
- * docker inspect containerName >>> It returns a JSON document containing useful configuration and status information for the specified container.
- * docker search <nameToSearch> >> it searchs not in local but in DockerHub
- * docker attach <ContainerId> >> to attach to a detached running container
- * **docker exec [OPTIONS] CONTAINER COMMAND [ARG...]**: Run a command in a running container.
- * docker pause <containerName>
+ * `docker version`
+ * `docker images`  >>> para ver qué imágenes están instaladas
+ * `docker run hello-world` >>> create and run a Docker container, loading the image 'hello-world' into the container
+ * `docker run imageName commandToRunInsideContainer`
+ * `docker search xxx` >>> find images with text xxx
+ * `docker pull imageName` >>> downloads the image (pre-loads it).
+ * `docker rmi imageNAme` >>> remove the image from the host
+ * `docker ps` >>> queries the Docker daemon for information about all the containers it knows about.
+ * `docker ps -a` >>> list  all containers, stopped and running.
+ * `docker logs containerName`
+ * `docker stop containerName`
+ * `docker inspect containerName` >>> It returns a JSON document containing useful configuration and status information for the specified container.
+ * `docker search <nameToSearch>` >> it searchs not in local but in DockerHub
+ * `docker attach <ContainerId>` >> to attach to a detached running container
+ * `docker exec [OPTIONS] CONTAINER COMMAND [ARG...]`: Run a command in a running container.
+ * `docker pause <containerName>`
 
  **Build and upload an image**
  * `docker build -t docker-whale .` >>> create an image called “docker-whale" from the Dockerfile; `-t`is the tag for the image.
@@ -194,12 +194,12 @@ http://aws.amazon.com/docker/
   * Note that each instruction is run independently, and causes a new image to be created - so RUN cd /tmp will not have any effect on the next instructions.
   * Whenever possible, Docker will re-use the intermediate images, accelerating docker build significantly (indicated by Using cache
 
- * docker tag <imageId> <accountNameInDockerHub/imageName:versionLabelOrTag> >>> Create tag to b e pushed to DockerHub
-  * docker login --username=xxx --email=xxx
-  * docker push islomar/xxxxx
+ * `docker tag <imageId> <accountNameInDockerHub/imageName:versionLabelOrTag>` >>> Create tag to b e pushed to DockerHub
+  * `docker login --username=xxx --email=xxx`
+  * `docker push islomar/xxxxx`
   * Automate builds on Docker Hub: [https://docs.docker.com/docker-hub/builds/](https://docs.docker.com/docker-hub/builds/)
 
-* docker exec -it test ps aux
+* `docker exec -it test ps aux`
  * Show all the process in the test container.
 
 **Dockerfile**:
@@ -246,17 +246,17 @@ Or using the right parameters to execute a command:
 
 
 
-* **docker run -t -i ubuntu:14.04 /bin/bash**
+`docker run -t -i ubuntu:14.04 /bin/bash`
  * Run an interactive shell.
  * The `-t` flag assigns a pseudo-tty or terminal inside our new container and the `-i` flag allows us to make an interactive connection by grabbing the standard in (STDIN) of the container.
  * To detach the tty without exiting the shell, use the escape sequence Ctrl-p + Ctrl-q. The container will continue to exist in a stopped state once exited. To list all containers, stopped and running, use the docker ps -a command.
  * With -t you're actually inside the container.
  * You can use `-ti`
 
-**docker run -d ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"**
+`docker run -d ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"`
 The -d flag tells Docker to run the container and put it in the background, to daemonize it (detached mode).
 
-**docker run -d -P training/webapp python app.py**
+`docker run -d -P training/webapp python app.py`
 The -P flag is new and tells Docker to map any required network ports inside our container to our host. This lets us view our web application.
 
 
