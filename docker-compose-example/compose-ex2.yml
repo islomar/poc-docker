@@ -1,0 +1,22 @@
+nginx:
+  image: nginx
+  links:
+   - tomcatapp1:tomcatapp1
+   - tomcatapp2:tomcatapp2
+   - tomcatapp3:tomcatapp3
+  ports:
+   - "80:80"
+  volumes:
+   - nginx.conf:/etc/nginx/nginx.conf
+tomcatapp1:
+  image: tomcat
+  volumes:
+   - sample.war:/usr/local/tomcat/webapps/sample.war
+tomcatapp2:
+  image: tomcat
+  volumes:
+   - sample.war:/usr/local/tomcat/webapps/sample.war
+tomcatapp3:
+  image: tomcat
+  volumes:
+   - sample.war:/usr/local/tomcat/webapps/sample.war

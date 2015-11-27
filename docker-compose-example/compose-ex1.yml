@@ -1,0 +1,4 @@
+tomcatapp:
+  image: tomcat
+  ports:
+   - "8080"
