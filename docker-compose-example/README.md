@@ -16,6 +16,12 @@
 * Tutorial:
  * [https://www.youtube.com/watch?v=gtoT0By8yh4&feature=youtu.be&list=PLkA60AVN3hh_6cAz8TUGtkYbJSL2bdZ4h](https://www.youtube.com/watch?v=gtoT0By8yh4&feature=youtu.be&list=PLkA60AVN3hh_6cAz8TUGtkYbJSL2bdZ4h)
  * [https://gist.github.com/botchagalupe/53695f50eebbd3eaa9aa](https://gist.github.com/botchagalupe/53695f50eebbd3eaa9aa)
+ * Docker volumes: [http://docs.docker.com/engine/userguide/dockervolumes/](http://docs.docker.com/engine/userguide/dockervolumes/)
 
 ##Commands
 * `docker-compose ps`
+docker-compose -f compose-ex1.yml up -d
+
+docker-compose -f compose-ex1.yml ps
+
+docker-compose -f compose-ex1.yml logs
