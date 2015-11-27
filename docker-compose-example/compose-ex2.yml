@@ -7,16 +7,16 @@ nginx:
   ports:
    - "80:80"
   volumes:
-   - nginx.conf:/etc/nginx/nginx.conf
+   - ./nginx.conf:/etc/nginx/nginx.conf
 tomcatapp1:
   image: tomcat
   volumes:
-   - sample.war:/usr/local/tomcat/webapps/sample.war
+   - ./sample.war:/usr/local/tomcat/webapps/sample.war
 tomcatapp2:
   image: tomcat
   volumes:
-   - sample.war:/usr/local/tomcat/webapps/sample.war
+   - ./sample.war:/usr/local/tomcat/webapps/sample.war
 tomcatapp3:
   image: tomcat
   volumes:
-   - sample.war:/usr/local/tomcat/webapps/sample.war
+   - ./sample.war:/usr/local/tomcat/webapps/sample.war

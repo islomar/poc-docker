@@ -1,5 +1,7 @@
 #Docker-machine
+Docker Machine allows you to provision Docker on virtual machines that reside either on your local system or on a cloud provider. Docker Machine creates a host on a VM and you use the Docker Engine client as needed to build images and create containers on the host.
 
+* Documentation:
 [https://docs.docker.com/machine/get-started/](https://docs.docker.com/machine/get-started/)
 
 `docker-machine ls`

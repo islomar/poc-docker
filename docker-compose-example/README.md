@@ -19,7 +19,7 @@
  * Docker volumes: [http://docs.docker.com/engine/userguide/dockervolumes/](http://docs.docker.com/engine/userguide/dockervolumes/)
 
 ##Commands
-* `docker-compose ps`
+`docker-compose ps`
 `docker-compose -f compose-ex1.yml up -d`
 `docker-compose -f compose-ex1.yml ps`
 `docker-compose -f compose-ex1.yml logs`
@@ -31,13 +31,13 @@ docker-compose up -d
 
 docker-compose ps 
 
-docker exec composetest_nginx_1 cat /etc/hosts
+docker exec dockercomposeexample_nginx_1 cat /etc/hosts
 
-docker exec composetest_tomcatapp1_1 ip a 
+docker exec dockercomposeexample_tomcatapp1_1 ip a 
 
-docker exec composetest_tomcatapp2_1 ip a
+docker exec dockercomposeexample_tomcatapp2_1 ip a
 
-docker exec composetest_tomcatapp3_1 ip a
+docker exec dockercomposeexample_tomcatapp3_1 ip a
 
 curl http://localhost/sample/
 
