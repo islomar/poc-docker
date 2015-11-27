@@ -20,8 +20,26 @@
 
 ##Commands
 * `docker-compose ps`
-docker-compose -f compose-ex1.yml up -d
+`docker-compose -f compose-ex1.yml up -d`
+`docker-compose -f compose-ex1.yml ps`
+`docker-compose -f compose-ex1.yml logs`
 
-docker-compose -f compose-ex1.yml ps
+`
+export COMPOSE_FILE=compose-ex2.yml
 
-docker-compose -f compose-ex1.yml logs
+docker-compose up -d
+
+docker-compose ps 
+
+docker exec composetest_nginx_1 cat /etc/hosts
+
+docker exec composetest_tomcatapp1_1 ip a 
+
+docker exec composetest_tomcatapp2_1 ip a
+
+docker exec composetest_tomcatapp3_1 ip a
+
+curl http://localhost/sample/
+
+docker-compose stop
+`
