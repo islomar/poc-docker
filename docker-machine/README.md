@@ -14,5 +14,7 @@ Docker Machine allows you to provision Docker on virtual machines that reside ei
 
 `curl $(docker-machine ip dev):8000`
 
+`docker-machine ssh default`
+
 `docker-machine stop dev`
 `docker-machine start dev`

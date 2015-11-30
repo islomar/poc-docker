@@ -176,7 +176,7 @@ Docker containers only run as long as the command you specify is active.
  * `docker run hello-world` >>> create and run a Docker container, loading the image 'hello-world' into the container
  * `docker run imageName commandToRunInsideContainer`
  * `docker search xxx` >>> find images with text xxx
- * `docker pull imageName` >>> downloads the image (pre-loads it).
+ * `docker pull imageName` >>> downloads the image (pre-loads it) from Docker Hub (for example).
  * `docker rmi imageNAme` >>> remove the image from the host
  * `docker ps` >>> queries the Docker daemon for information about all the containers it knows about.
  * `docker ps -a` >>> list  all containers, stopped and running.
@@ -187,6 +187,19 @@ Docker containers only run as long as the command you specify is active.
  * `docker attach <ContainerId>` >> to attach to a detached running container
  * `docker exec [OPTIONS] CONTAINER COMMAND [ARG...]`: Run a command in a running container.
  * `docker pause <containerName>`
+
+* **Container's files**
+ * Let’ss ssh into the VM and see where the images/containers are stored:
+`docker-machine ssh default`
+* Now:
+`
+sudo su -
+cd /var/lib/docker
+find ./aufs/mnt -name <first few letters of container id>*
+`
+ * This is the location where your container lives. If you inspect that folder, you’ll see the running container’s files right there.
+ * Each directory in that location is a layer in the image. If you matched docker images -a you should see all of those layers in the /var/lib/docker/aufs/mnt.
+
 
  **Build and upload an image**
  * `docker build -t docker-whale .` >>> create an image called “docker-whale" from the Dockerfile; `-t`is the tag for the image.
@@ -244,6 +257,11 @@ Or using the right parameters to execute a command:
 
 `$ docker run s3cmd ls s3://mybucket`
 
+* **Difference between CMD and ENTRYPOINT**
+ * CMD can be overridden at run time
+`docker run -it centos:7 <command_to_run>`
+ * ENTRYPOINT fixed command, pass things in as parameters
+`docker run -it centos:7 <params to add>`
 
 
 `docker run -t -i ubuntu:14.04 /bin/bash`
@@ -264,6 +282,30 @@ The -P flag is new and tells Docker to map any required network ports inside our
 ## Docker orchestration
 [https://railsadventures.wordpress.com/2015/11/15/docker-orchestration-the-full-story/](https://railsadventures.wordpress.com/2015/11/15/docker-orchestration-the-full-story/)
 
+
+## Docker registry
+[https://docs.docker.com/registry/](https://docs.docker.com/registry/)
+You should use the Registry if you want to:
+ * tightly control where your images are being stored
+ * fully own your images distribution pipeline
+ * integrate image storage and distribution tightly into your in-house development workflow
+Let’s deploy a local registry and try it out
+`docker run -d -p 5000:5000 --name registry registry:2`
+Let’s tag and push our previously created docker image to our new registry:
+`docker tag local.io/docker-java localhost:5000/local.io/docker-java`
+then push it:
+`docker push localhost:5000/local.io/docker-java`
+
+
+
+## DEMO creating Docker images
+* Clone the following repository:
+`git clone git@github.com:fabric8io/base-images.git`
+`cd ./base-images/java/images/centos/openjdk8/jdk`
+* Run the folowing command from the directory that has the Dockerfile
+`docker build -t local.io/docker-java:latest .`
+* Now list the docker images:
+`docker images`
 
 
 ## SCRATCH
