@@ -187,6 +187,7 @@ Docker containers only run as long as the command you specify is active.
  * `docker attach <ContainerId>` >> to attach to a detached running container
  * `docker exec [OPTIONS] CONTAINER COMMAND [ARG...]`: Run a command in a running container.
  * `docker pause <containerName>`
+ * `docker start <containerId>`:		arrancar un contenedor que ya existía
 
 * **Container's files**
  * Let’ss ssh into the VM and see where the images/containers are stored:
