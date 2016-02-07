@@ -18,7 +18,6 @@ You can also take a look at the /etc/hosts file
 `cat /etc/hosts`
 
 
-
 ## Stateful containers
 * Docker volumes to the rescue!
 * Persist data outside of the container
