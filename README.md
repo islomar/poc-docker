@@ -4,6 +4,7 @@
 [https://docs.docker.com/v1.8/reference/glossary/](https://docs.docker.com/v1.8/reference/glossary/)
 
 ## Resources
+* https://medium.freecodecamp.com/a-beginner-friendly-introduction-to-containers-vms-and-docker-79a9e3e119b#.mf9aqjwmb
 * Getting Started with Docker by John Willis: [https://www.youtube.com/watch?v=zOyQx9vM9Ac](https://www.youtube.com/watch?v=zOyQx9vM9Ac)
 * The Docker Book
 * Training: [https://training.docker.com/self-paced-training](https://training.docker.com/self-paced-training)
