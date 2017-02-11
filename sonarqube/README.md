@@ -5,8 +5,8 @@
 If you want to install a SonarQube in your local machine, follow these instructions:
 
 1. Run the script `run_postgresql_and_sonarqube.sh`:
-* The first time you run it, it will download the images
-* Then, it will create and run both a PostgreSQL and a SonarqQube containers
+ * The first time you run it, it will download the images
+ * Then, it will create and run both a PostgreSQL and a SonarqQube containers
 
 2. Access the URL http://localhost:9000 to check that SonarQube is up and running
 
@@ -22,11 +22,11 @@ If you want to install a SonarQube in your local machine, follow these instructi
 
 5. Run `sonar-scanner` from your project folder
 
-6. Access the SonarQube server to wathc the results
+6. Access the SonarQube server to watch the results
 
 7. After finishing using it, stop the containers and remove them:
-`docker stop $(docker ps -a -q)`
-`docker rm $(docker ps -a -q)`
+ * `docker stop $(docker ps -a -q)`
+ * `docker rm $(docker ps -a -q)`
 
 
 ##Recommended links:
