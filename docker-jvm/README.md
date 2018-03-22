@@ -6,3 +6,4 @@
 * https://developers.redhat.com/blog/2017/03/14/java-inside-docker/
 * https://blog.docker.com/2018/03/video-series-modernizing-java-apps-developers-part-2/
 * https://www.opsian.com/blog/java-on-docker/
+* https://www.paradigmadigital.com/dev/como-optimizar-tu-aplicacion-java-en-docker-1-2
