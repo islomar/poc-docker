@@ -9,12 +9,12 @@
 * The Docker Book
 * Training: [https://training.docker.com/self-paced-training](https://training.docker.com/self-paced-training)
 * Docs: [https://docs.docker.com/](https://docs.docker.com/)
-* Getting Started: 
+* Getting Started:
  * [https://docs.docker.com/linux/started/](https://docs.docker.com/linux/started/)
  * [https://docs.docker.com/engine/userguide/dockerizing/](https://docs.docker.com/engine/userguide/dockerizing/)
   * [https://docs.docker.com/engine/userguide/usingdocker/](https://docs.docker.com/engine/userguide/usingdocker/)
 * Networking: [https://docs.docker.com/engine/userguide/networkingcontainers/](https://docs.docker.com/engine/userguide/networkingcontainers/)
-* Docker compose: 
+* Docker compose:
  * [http://www.docker.com/docker-compose](http://www.docker.com/docker-compose)
  * [http://docs.docker.com/compose/](http://docs.docker.com/compose/)
 * Tutorials: [https://blog.docker.com/2015/03/docker-tutorial-1-installing-docker/](https://blog.docker.com/2015/03/docker-tutorial-1-installing-docker/)
@@ -34,9 +34,9 @@ http://www.docker.com/docker-compose
 * Each virtual machine includes the application, the necessary binaries and libraries and an entire guest operating system - all of which may be tens of GBs in size.
 
 **Containers**
-* Containers include the application and all of its dependencies, but share the kernel with other containers. They run as an isolated process in userspace on the host operating system. They’re also not tied to any specific infrastructure – Docker containers run on any computer, on any infrastructure and in any cloud. 
+* Containers include the application and all of its dependencies, but share the kernel with other containers. They run as an isolated process in userspace on the host operating system. They’re also not tied to any specific infrastructure – Docker containers run on any computer, on any infrastructure and in any cloud.
 
-On a typical Linux installation, the Docker client, the Docker daemon, and any containers run directly on your localhost. This means you can address ports on a Docker container using standard localhost addressing such as `localhost:8000` 
+On a typical Linux installation, the Docker client, the Docker daemon, and any containers run directly on your localhost. This means you can address ports on a Docker container using standard localhost addressing such as `localhost:8000`
 
 In an OS X installation, the docker daemon is running inside a Linux VM called default. The default is a lightweight Linux VM made specifically to run the Docker daemon on Mac OS X. The VM runs completely from RAM, is a small ~24MB download, and boots in approximately 5s.
 
@@ -189,6 +189,9 @@ Docker containers only run as long as the command you specify is active.
  * `docker exec [OPTIONS] CONTAINER COMMAND [ARG...]`: Run a command in a running container.
  * `docker pause <containerName>`
  * `docker start <containerId>`:		arrancar un contenedor que ya existía
+ * How to Remove Dangling Docker Images: `docker rmi -f $(docker images -f "dangling=true" -q)`
+    * https://nickjanetakis.com/blog/docker-tip-31-how-to-remove-dangling-docker-images
+* Automatically Clean up after Docker Daily: `docker system prune -f`
 
 * **Container's files**
  * Let’ss ssh into the VM and see where the images/containers are stored:
@@ -223,19 +226,19 @@ find ./aufs/mnt -name <first few letters of container id>*
 * .dockerignore:
  * If a file named .dockerignore exists in the root of PATH, then Docker interprets it as a newline-separated list of exclusion patterns. Docker excludes files or directories relative to PATH that match these exclusion patterns.
 * **FROM**: The FROM instruction sets the Base Image for subsequent instructions. FROM can appear multiple times within a single Dockerfile in order to create multiple images.
-* **RUN**: 
+* **RUN**:
   * You have both a shell and an exec form.
   * The RUN instruction will execute any commands in a new layer on top of the current image and commit the results. Layering RUN instructions and generating commits conforms to the core concepts of Docker where commits are cheap and containers can be created from any point in an image’s history, much like source control. The command is run in a shell - /bin/sh -c
   * The cache for an instruction like RUN apt-get dist-upgrade -y will be reused during the next build.
- * **CMD**: 
+ * **CMD**:
   * There can only be one CMD instruction in a Dockerfile. The main purpose of a CMD is to provide defaults for an executing container. These defaults can include an executable, or they can omit the executable, in which case you must specify an ENTRYPOINT instruction as well.
   * If the user specifies arguments to docker run then they will override the default specified in CMD.
- * **LABEL**: The LABEL instruction adds metadata to an image. A LABEL is a key-value pair. Docker recommends combining labels in a single LABEL instruction where possible. 
+ * **LABEL**: The LABEL instruction adds metadata to an image. A LABEL is a key-value pair. Docker recommends combining labels in a single LABEL instruction where possible.
  * **EXPOSE**: The EXPOSE instructions informs Docker that the container will listen on the specified network ports at runtime. Docker uses this information to interconnect containers using links (see the Docker User Guide) and to determine which ports to expose to the host when using the -P flag.
  * **ADD <src> <dest>**:  The ADD instruction copies new files, directories or remote file URLs from <src> and adds them to the filesystem of the container at the path <dest>.
  * **COPY**: The COPY instruction copies new files or directories from <src> and adds them to the filesystem of the container at the path <dest>.
  * ADD vs COPY (use COPY!!): [https://labs.ctl.io/dockerfile-add-vs-copy/](https://labs.ctl.io/dockerfile-add-vs-copy/). The only reason to use ADD is when you have an archive file that you definitely want to have auto-extracted into the image
- * **ENTRYPOINT**: 
+ * **ENTRYPOINT**:
   * An ENTRYPOINT allows you to configure a container that will run as an executable.
   * Only the last ENTRYPOINT instruction in the Dockerfile will have an effect.
  * **VOLUME**: The VOLUME instruction creates a mount point with the specified name and marks it as holding externally mounted volumes from native host or other containers.
