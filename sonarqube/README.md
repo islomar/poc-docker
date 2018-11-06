@@ -1,6 +1,6 @@
-#SonarQube with Docker
+# SonarQube with Docker
 
-##How to setup a SonarQube server
+## How to setup a SonarQube server
 
 If you want to install a SonarQube in your local machine, follow these instructions:
 
@@ -29,5 +29,5 @@ If you want to install a SonarQube in your local machine, follow these instructi
  * `docker rm $(docker ps -a -q)`
 
 
-##Recommended links:
+## Recommended links:
 http://www.xgomez.com/2016/12/quickest-static-code-analysis-with-sonar-and-docker/
