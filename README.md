@@ -53,7 +53,7 @@ Depending on how it was built, an image might run a simple, single command and t
 To try something more ambitious, you can run an Ubuntu container with:
  `$ docker run -it ubuntu bash`
 
-###General information
+### General information
 Its architectural philosophy centers around atomic or throw-away containers. During deployment, the whole running environment of the old application is thrown away with it.
 Nothing in the environment of the application will live longer than the application itself and that’s a simple idea with big repercussions.
 
@@ -102,7 +102,7 @@ The Docker daemon has a remote API. This is in fact what the Docker command-line
 
 Docker registered their own TCP port with IANA and it’s now generally configured to use TCP port 2375 when running unencrypted, or 2376 when handling encrypted traffic. In Docker 1.3 and later, the default is to use the encrypted port on 2376.
 
-###Container networking
+### Container networking
 The Docker server acts as a virtual bridge and the containers are clients behind it. A bridge is just a network device that repeats traffic from one side to another. So you can think of it like a mini virtual network with hosts attached. The implementation is that each container has its own virtual ethernet interface connected to the Docker bridge and its own IP address allocated to the virtual interface.
 Docker lets you bind ports on the host to the container so that the outside world can reach your container. That traffic passes over a proxy that is also part of the Docker.
 
@@ -112,10 +112,10 @@ A good way to start shaping your understanding of how to leverage Docker is to t
 
 A quick test on Docker 1.4.1 reveals that a newly created container from an existing image takes a whopping 12 kilobytes of disk space. That’s pretty lightweight. One the other hand, a new virtual machine created from a golden image might require hundreds or thousands of megabytes. The reason that the new container is so small is because it is just a reference to a layered filesystem image and some metadata about the configuration.
 
-###Limited isolation
+### Limited isolation
 Containers are isolated from each other, but it’s probably more limited than you might expect. While you can put limits on their resources, the default container configuration just has them all sharing CPU and memory on the host system, much as you would expect from colocated Unix processes. That means that unless you constrain them, containers can compete for resources on your production machines. That is sometimes what you want, but it impacts your design decisions. Limits on CPU and memory use are possible through Docker but, in most cases, they are not the default like they would be from a virtual machine.
 
-###Stateless applications
+### Stateless applications
 A good example of the kind of application that containerizes well is a web application that keeps its state in a database. If you think about your web application, though, it probably has local state that you rely on, like configuration files. That might not seem like a lot of state, but it means that you’ve limited the reusability of your container, and maintaining configuration data in your codebase.
 In many cases, the process of containerizing your application means that you move configuration state into environment variables that can be passed to your application from the container. This allows you to easily do things like use the same container to run in either production or staging environments.
 
@@ -124,12 +124,12 @@ To simplify this a bit, remember that a Docker image contains everything require
 
 “What was the previous version?”: Docker has a built-in mechanism for handling this: it provides image tagging at deployment time.
 
-###Building
+### Building
 The Docker command-line tool contains a build flag that will consume a Dockerfile and produce a Docker image. Each command in a Dockerfile generates a new layer in the image, so it’s easy to reason about what the build is going to do by looking at the Dockerfile itself.
 
 The standard Docker client only handles deploying to a single host at a time, but there are other tools avaliable that make it easy to deploy into a cluster of Docker hosts
 
-###The Docker ecosystem
+### The Docker ecosystem
 The first important category of tools that adds functionality to the core Docker distribution contains orchestration and mass deployment tools like Docker’s Swarm, New Relic’s Centurion and Spotify’s Helios. All of these take a generally simple approach to orchestration. For more complex environments, Google’s Kubernetes and Apache Mesos are more powerful options. There are new tools shipping constantly as new
 adopters discover gaps and publish improvements.
 Additional categories include auditing, logging, mapping, and many other tools, the majority of which leverage the Docker API directly. Recent announcements include direct support for Docker logs in Mozilla’s Heka log router, for example.
