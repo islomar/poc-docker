@@ -5,6 +5,7 @@
 
 ## Resources
 * https://medium.freecodecamp.com/a-beginner-friendly-introduction-to-containers-vms-and-docker-79a9e3e119b#.mf9aqjwmb
+* https://criskrus.com/tags/docker/
 * Getting Started with Docker by John Willis: [https://www.youtube.com/watch?v=zOyQx9vM9Ac](https://www.youtube.com/watch?v=zOyQx9vM9Ac)
 * The Docker Book
 * Training: [https://training.docker.com/self-paced-training](https://training.docker.com/self-paced-training)
@@ -63,7 +64,7 @@ Docker bundles application software and required OS filesystems together in a si
 
 Using packaged artifacts to test and deliver the exact same artifact to all systems in all environments.
 
-##Abstracting software applications from the hardware without sacrificing resources.
+## Abstracting software applications from the hardware without sacrificing resources
 Traditional enterprise virtualization solutions like VMware were typically used when people have needed to create an abstraction layer between the physical hardware and the software applications that run on it, at the cost of resources.
 The hypervisors that manage the VMs and each VM running kernel use a percentage of the hardware system’s resources, which are then no longer available to the hosted applications. **A container, on the other hand, is just another process** that talks directly to the Linux kernel and therefore can utilize more resources, up until the system or quota-based limits are reached.
 
@@ -321,9 +322,9 @@ then push it:
 
 
 ## TO BE SEEN/READ
-https://openwebinars.net/docker-contenedores-de-aplicaciones-el-futuro-de-la-distribucion-de-aplicaciones/
-https://www.docker.com/products/use-cases
-https://docs.docker.com/userguide/
+* https://openwebinars.net/docker-contenedores-de-aplicaciones-el-futuro-de-la-distribucion-de-aplicaciones/
+* https://www.docker.com/products/use-cases
+* https://docs.docker.com/userguide/
 
-##Questions
+## Questions
 * Can you isolate resource comsumption?
